@@ -1,0 +1,48 @@
+
+subscription TripsBooked {
+  tripsBooked
+}
+mutation MutationBook($launchIds: [ID]!){
+  bookTrips(launchIds: $launchIds) {
+    success
+    message
+    launches {
+      id
+    }
+  }
+}
+
+query LaunchList {
+  launches {
+    cursor
+    hasMore
+    launches {
+      id
+      site
+       mission {
+              name
+              missionPatch
+            }
+    }
+  }
+}
+mutation Login($email: String) {
+  login(email: $email) {
+    token
+  }
+}
+query LaunchDetails($id:ID!) {
+  launch(id: $id) {
+    id
+    site
+    mission {
+      name
+      missionPatch(size:LARGE)
+    }
+    rocket {
+      name
+      type
+    }
+    isBooked
+  }
+}

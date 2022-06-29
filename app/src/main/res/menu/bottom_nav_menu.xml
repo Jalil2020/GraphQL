@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/listFragment"
+        android:actionLayout="@layout/fragment_list"
+        android:title="List" />
+    <item
+        android:id="@+id/loginFragment"
+        android:actionLayout="@layout/fragment_login"
+        android:title="Login" />
+</menu>

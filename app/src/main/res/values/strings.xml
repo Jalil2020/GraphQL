@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GraphQL</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error">Error</string>
+    <string name="tripCancelled">Cancelled</string>
+    <string name="tripBooked">TripBooked</string>
+    <string name="cancel">Cancel</string>
+    <string name="book_now">book now</string>
+</resources>
