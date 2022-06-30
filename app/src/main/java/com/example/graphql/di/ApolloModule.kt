@@ -25,5 +25,8 @@ class ApolloModule {
     @Provides
     @Singleton
     fun provideApolloClient(okHttpClient: OkHttpClient): ApolloClient =
-        ApolloClient.Builder().serverUrl("").okHttpClient(okHttpClient).build()
+        ApolloClient.Builder()
+            .httpServerUrl("https://apollo-fullstack-tutorial.herokuapp.com/graphql")
+            .webSocketServerUrl("wss://apollo-fullstack-tutorial.herokuapp.com/graphql")
+            .okHttpClient(okHttpClient).build()
 }

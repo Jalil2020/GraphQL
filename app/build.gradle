@@ -68,7 +68,6 @@ dependencies {
     implementation("com.apollographql.apollo3:apollo-runtime:3.3.2")
     implementation("com.apollographql.apollo3:apollo-normalized-cache-sqlite:3.3.2")
     implementation("com.apollographql.apollo3:apollo-api:3.3.2")
-    implementation 'com.apollographql.apollo:apollo-coroutines-support:x.y.z'
     /**
      *  Coroutines
      * */
