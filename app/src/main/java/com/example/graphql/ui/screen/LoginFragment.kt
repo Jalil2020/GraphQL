@@ -1,75 +1,51 @@
 package com.example.graphql.ui.screen
 
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Optional
-import com.apollographql.apollo3.network.okHttpClient
 import com.example.graphql.*
 import com.example.graphql.databinding.FragmentLoginBinding
+import com.example.graphql.presenter.LoginFragmentViewModel
+import com.example.graphql.presenter.impl.LoginFragmentViewModelImpl
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Response
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val binding by viewBinding(FragmentLoginBinding::bind)
-
+    private val viewModel: LoginFragmentViewModel by viewModels<LoginFragmentViewModelImpl>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(AuthorizationInterceptor(requireContext()))
-            .build()
 
-        val apolloClient = ApolloClient.Builder()
-            .serverUrl("https://apollo-fullstack-tutorial.herokuapp.com/graphql")
-            .okHttpClient(okHttpClient)
-            .build()
-//
-//              apolloClient.mutation(LoginMutation(email)).execute()
+        initObserver()
 
 
         binding.btnSend.setOnClickListener {
-            binding.progressBarLogin.visibility = View.VISIBLE
-            lifecycleScope.launchWhenResumed {
-                val email = "jalil@gmail.com"
-                val response =
-                    apolloClient.mutation(LoginMutation(email = Optional.presentIfNotNull(email)))
-                        .execute()
-                binding.txtToken.text = "Token: " + response.data?.login?.token
-                val token = response.data?.login?.token
-
-                if (token != null) {
-                    User(requireContext()).setToken(token)
-                }
-
-//                Log.d("TAG", "onCreate: ${response.data?.login?.token}")
-                binding.progressBarLogin.visibility = View.GONE
-            }
+            viewModel.getLogin(binding.edtEmail.text.toString())
         }
-        lifecycleScope.launchWhenResumed {
-            apolloClient.mutation(LoginMutation(Optional.presentIfNotNull(User(requireContext()).getToken())))
-                .execute()
-        }
-
-
     }
 
-    private class AuthorizationInterceptor(val context: Context) : Interceptor {
-        override fun intercept(chain: Interceptor.Chain): Response {
-            val request = chain.request().newBuilder()
-                .addHeader("Authorization", User(context).getToken())
-                .build()
+    private fun initObserver() {
 
-            return chain.proceed(request)
-        }
+        viewModel.loginFlow.onEach {
+            User(requireContext()).setToken(it.token.toString())
+            binding.txtToken.text = it.token.toString()
+            Log.d("TAG", "initObserver: ${it.token}")
+        }.launchIn(lifecycleScope)
+
+        viewModel.loadingFlow.onEach {
+            binding.progressBarLogin.isVisible = it
+        }.launchIn(lifecycleScope)
+
     }
 }

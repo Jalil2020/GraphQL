@@ -4,6 +4,6 @@ import com.example.graphql.TripsBookedSubscription
 import kotlinx.coroutines.flow.Flow
 
 interface MainActivityViewModel {
-    val subscriptionFlow:Flow<TripsBookedSubscription.Data>
+    val subscriptionFlow:Flow<Int?>
     fun getSubscription()
 }

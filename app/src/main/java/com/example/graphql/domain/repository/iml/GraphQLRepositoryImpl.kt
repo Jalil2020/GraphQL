@@ -1,11 +1,11 @@
 package com.example.graphql.domain.repository.iml
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.api.Optional
 import com.example.graphql.*
 import com.example.graphql.domain.repository.GraphQLRepository
+import com.example.graphql.type.Subscription
 import com.example.graphql.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -56,14 +56,22 @@ class GraphQLRepositoryImpl @Inject constructor(private val apolloClient: Apollo
             emit(Result.Error("Error"))
         }.flowOn(Dispatchers.IO)
 
-    override suspend fun getSubscription(): Flow<Result<TripsBookedSubscription.Data>> =
-        flow {
-            emit(Result.Loading(true))
-            val response = apolloClient.subscription(TripsBookedSubscription()).execute()
-            if (!response.hasErrors()) emit(Result.Success(response.data!!))
-            else emit(Result.Loading(true))
+    override suspend fun getSubscription(): Flow<Result<TripsBookedSubscription.Data>> = flow {
+        apolloClient.subscription(TripsBookedSubscription()).toFlow().collect {
+            emit(Result.Success(it.data!!))
+        }
+    }
 
-        }.catch {
-            emit(Result.Error("Error message"))
-        }.flowOn(Dispatchers.IO)
+
+    override suspend fun getLogin(email: String): Flow<Result<LoginMutation.Login>> = flow {
+        val response =
+            apolloClient.mutation(LoginMutation(Optional.presentIfNotNull(email))).execute()
+        emit(Result.Loading(true))
+
+        if (!response.hasErrors()) emit(Result.Success(response.data!!.login!!))
+        else emit(Result.Loading(true))
+
+    }.catch {
+        emit(Result.Error("Error message"))
+    }.flowOn(Dispatchers.IO)
 }

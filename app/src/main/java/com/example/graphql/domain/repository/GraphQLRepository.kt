@@ -12,4 +12,5 @@ interface GraphQLRepository {
     suspend fun setBookTrip(id: String):Flow<Result<MutationBookMutation.BookTrips>>
     suspend fun setCancelBookTrip(id: String): Flow<Result<CancelTripMutation.CancelTrip>>
     suspend fun getSubscription(): Flow<Result<TripsBookedSubscription.Data>>
+    suspend fun getLogin(email:String):Flow<Result<LoginMutation.Login>>
 }

@@ -1,14 +1,10 @@
 package com.example.graphql.presenter.impl
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.graphql.CancelTripMutation
-import com.example.graphql.LaunchDetailsQuery
-import com.example.graphql.LaunchListQuery
-import com.example.graphql.MutationBookMutation
+import com.example.graphql.*
 import com.example.graphql.domain.repository.GraphQLRepository
 import com.example.graphql.presenter.DetailsFragmentViewModel
 import com.example.graphql.utils.Result
@@ -25,6 +21,7 @@ class DetailsFragmentViewModelImpl @Inject constructor(private val repository: G
     override val setBookTripsFlow = MutableSharedFlow<MutationBookMutation.BookTrips>()
     override val setCancelTripFLow = MutableSharedFlow<CancelTripMutation.CancelTrip>()
     override val loadingFlow = MutableSharedFlow<Boolean>()
+
 
     override fun getDetails(id: String) {
         viewModelScope.launch {
@@ -44,6 +41,7 @@ class DetailsFragmentViewModelImpl @Inject constructor(private val repository: G
     override fun setBookTrip(id: String) {
 
         viewModelScope.launch {
+            loadingFlow.emit(true)
             repository.setBookTrip(id).collect {
                 when (it) {
                     is Result.Success -> setBookTripsFlow.emit(it.data)
@@ -59,6 +57,7 @@ class DetailsFragmentViewModelImpl @Inject constructor(private val repository: G
 
     override fun setCancelBookTrip(id: String) {
         viewModelScope.launch {
+            loadingFlow.emit(true)
             repository.setCancelBookTrip(id).collect {
                 when (it) {
                     is Result.Success -> setCancelTripFLow.emit(it.data)

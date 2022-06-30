@@ -9,9 +9,6 @@ mutation CancelTrip($id:ID!) {
   }
 }
 
-subscription TripsBooked {
-  tripsBooked
-}
 mutation MutationBook($launchIds: [ID]!){
   bookTrips(launchIds: $launchIds) {
     success

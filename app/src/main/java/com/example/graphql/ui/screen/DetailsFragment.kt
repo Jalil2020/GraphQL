@@ -1,6 +1,7 @@
 package com.example.graphql.ui.screen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -17,6 +18,7 @@ import com.example.graphql.*
 import com.example.graphql.databinding.FragmentDetailsBinding
 import com.example.graphql.presenter.DetailsFragmentViewModel
 import com.example.graphql.presenter.impl.DetailsFragmentViewModelImpl
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -73,7 +75,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         viewModel.setCancelTripFLow.onEach {
             Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
         }.launchIn(lifecycleScope)
-    }
+
+         }
 
       private fun configureButton(isBooked: Boolean) {
         isBooking = isBooked

@@ -1,10 +1,7 @@
 package com.example.graphql.presenter
 
 import androidx.lifecycle.LiveData
-import com.example.graphql.CancelTripMutation
-import com.example.graphql.LaunchDetailsQuery
-import com.example.graphql.LaunchListQuery
-import com.example.graphql.MutationBookMutation
+import com.example.graphql.*
 import com.example.graphql.adapter.MutationBookMutation_ResponseAdapter
 import kotlinx.coroutines.flow.Flow
 
