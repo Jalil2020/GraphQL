@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.apollographql.apollo3.api.Optional
 import com.example.graphql.*
+import com.example.graphql.data.local.User
 import com.example.graphql.databinding.FragmentLoginBinding
 import com.example.graphql.presenter.LoginFragmentViewModel
 import com.example.graphql.presenter.impl.LoginFragmentViewModelImpl
@@ -28,6 +28,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
         initObserver()
+
 
 
         binding.btnSend.setOnClickListener {

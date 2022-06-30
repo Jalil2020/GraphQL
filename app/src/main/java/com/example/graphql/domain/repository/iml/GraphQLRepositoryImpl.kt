@@ -28,7 +28,7 @@ class GraphQLRepositoryImpl @Inject constructor(private val apolloClient: Apollo
         flow {
             val response = apolloClient.query(LaunchDetailsQuery(id)).execute()
 
-            if (!response.hasErrors() && response.data != null) emit(Result.Success(response.data!!.launch!!))
+            if (response.data != null) emit(Result.Success(response.data!!.launch!!))
             else emit(Result.Error("Error response"))
 
         }.catch {

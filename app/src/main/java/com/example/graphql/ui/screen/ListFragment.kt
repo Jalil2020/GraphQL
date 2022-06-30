@@ -1,9 +1,7 @@
 package com.example.graphql.ui.screen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,6 +12,7 @@ import com.example.graphql.*
 import com.example.graphql.databinding.FragmentListBinding
 import com.example.graphql.presenter.ListFragmentViewModel
 import com.example.graphql.presenter.impl.ListFragmentViewModelImpl
+import com.example.graphql.ui.adapter.MyAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

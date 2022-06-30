@@ -1,7 +1,7 @@
 package com.example.graphql.utils
 
 import android.content.Context
-import com.example.graphql.User
+import com.example.graphql.data.local.User
 import okhttp3.Interceptor
 import okhttp3.Response
 

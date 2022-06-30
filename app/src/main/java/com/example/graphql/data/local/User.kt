@@ -1,4 +1,4 @@
-package com.example.graphql
+package com.example.graphql.data.local
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -1,14 +1,18 @@
-package com.example.graphql
+package com.example.graphql.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.graphql.LaunchListQuery
+import com.example.graphql.R
 
-class MyAdapter : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+class MyAdapter : ListAdapter<LaunchListQuery.Launch, MyAdapter.ViewHolder>(DiffCallBack()) {
     private var list = ArrayList<LaunchListQuery.Launch>()
 
     var onItemClicked: ((LaunchListQuery.Launch) -> Unit)? = null
@@ -44,4 +48,17 @@ class MyAdapter : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
         list = l
         notifyDataSetChanged()
     }
+}
+
+class DiffCallBack : DiffUtil.ItemCallback<LaunchListQuery.Launch>() {
+    override fun areItemsTheSame(
+        oldItem: LaunchListQuery.Launch,
+        newItem: LaunchListQuery.Launch
+    ): Boolean = oldItem.id == newItem.id
+
+    override fun areContentsTheSame(
+        oldItem: LaunchListQuery.Launch,
+        newItem: LaunchListQuery.Launch
+    ): Boolean = oldItem.mission == newItem.mission
+
 }

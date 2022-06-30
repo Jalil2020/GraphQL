@@ -1,4 +1,4 @@
-package com.example.graphql
+package com.example.graphql.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import com.example.graphql.R
 import com.example.graphql.presenter.MainActivityViewModel
 import com.example.graphql.presenter.impl.MainActivityViewModelImpl
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 Snackbar.LENGTH_LONG
             ).show()
         }.launchIn(lifecycleScope)
+
     }
 }
 
